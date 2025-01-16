@@ -40,12 +40,6 @@ def get_assets_with_native_balance(api_key, owner_address):
 
     return result
 
-
-@app.get("/net-worth/{wallet_address}")
-def net_worth_by_wallet_address(wallet_address):
-    return {"details": "Net worth"}
-
-
 @app.post("/net-worth")
 def net_worth_by_wallet_address(request: schemas.Wallet, db: Session = Depends(get_db)):
     output = get_assets_with_native_balance(api_key, request.wallet_address)
