@@ -41,9 +41,9 @@ def get_assets_with_native_balance(api_key, owner_address):
     return result
 
 
-@app.get("/net-worth")
-def net_worth_by_wallet_address(request: schemas.Wallet):
-    output = get_assets_with_native_balance(api_key, request.wallet_address)
+@app.get("/net-worth/{wallet_address}")
+def net_worth_by_wallet_address(wallet_address: str):
+    output = get_assets_with_native_balance(api_key, wallet_address)
     net_worth = output["nativeBalance"].get("total_price")
 
     filtered_items = [
@@ -57,5 +57,5 @@ def net_worth_by_wallet_address(request: schemas.Wallet):
         if price_info:
             net_worth += price_info.get("total_price")
 
-    print(f"Address: {request.wallet_address} | Net Worth: ${net_worth} USDC")
+    print(f"Address: {wallet_address} | Net Worth: ${net_worth} USDC")
     return net_worth
